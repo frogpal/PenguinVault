@@ -1,0 +1,44 @@
+filters:
+  and:
+    - file.inFolder("2 - Source Materials/Journal")
+formulas:
+  Untitled: created.year
+  Created: if(file.hasProperty("created"), created.relative(), now() - file.ctime.date())
+properties:
+  formula.Untitled:
+    displayName: Year
+views:
+  - type: table
+    name: Entries
+    groupBy:
+      property: formula.Untitled
+      direction: DESC
+    order:
+      - file.name
+      - type
+      - formula.Created
+    sort:
+      - property: created
+        direction: DESC
+    columnSize:
+      file.name: 437
+      note.type: 156
+    markers: number
+    cardSize: 390
+  - type: table
+    name: Entries by type
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - formula.Created
+    sort:
+      - property: created
+        direction: DESC
+    columnSize:
+      file.name: 475
+      note.type: 156
+      note.created: 187
+    markers: number
+    cardSize: 390

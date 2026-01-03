@@ -1,0 +1,54 @@
+formulas:
+  Created: if(file.hasProperty("created"), created.relative(), now() - file.ctime)
+  Last modified: file.mtime.relative()
+  last modified limit: file.mtime > (now() - "3d")
+  Untitled: file.links.filter(value.asFile() == False)
+properties:
+  formula.Untitled:
+    displayName: Missing links
+views:
+  - type: table
+    name: Todo items
+    filters:
+      and:
+        - file.hasTag("todo", "draft")
+    order:
+      - file.name
+      - formula.Created
+      - formula.Last modified
+    sort:
+      - property: formula.Last modified
+        direction: DESC
+    columnSize:
+      file.name: 426
+      formula.Last modified: 251
+  - type: table
+    name: Recently modified
+    filters:
+      and:
+        - '!file.inFolder("x/Attachments")'
+    order:
+      - file.name
+      - formula.Created
+      - formula.Last modified
+      - formula.last modified limit
+    sort:
+      - property: file.mtime
+        direction: DESC
+    columnSize:
+      file.name: 426
+      formula.Last modified: 153
+      formula.last modified limit: 168
+  - type: table
+    name: Missing links
+    filters:
+      and:
+        - "!formula.Untitled.isEmpty()"
+    order:
+      - file.name
+      - formula.Untitled
+    sort:
+      - property: formula.Last modified
+        direction: DESC
+    columnSize:
+      file.name: 463

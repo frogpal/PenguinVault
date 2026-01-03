@@ -1,0 +1,71 @@
+filters:
+  and:
+    - file.inFolder("2 - Source Materials/Resources")
+formulas:
+  Untitled: ""
+  Untitled 2: if(file.hasProperty("source") && file.properties.source != "", link(source, "Link"))
+  Untitled 3: created.format("D MMM YYYY")
+  Year: created.year
+properties:
+  formula.Untitled 2:
+    displayName: Source
+  formula.Untitled 3:
+    displayName: Created
+views:
+  - type: table
+    name: All Resources
+    filters:
+      and:
+        - '!file.hasTag("latex")'
+    groupBy:
+      property: formula.Year
+      direction: DESC
+    order:
+      - file.name
+      - type
+      - tags
+      - formula.Untitled 3
+    sort:
+      - property: created
+        direction: DESC
+    columnSize:
+      file.name: 563
+      note.type: 140
+      note.tags: 191
+  - type: table
+    name: Resources by type
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - formula.Untitled 2
+      - tags
+      - formula.Untitled 3
+    sort:
+      - property: created
+        direction: DESC
+    columnSize:
+      file.name: 620
+      note.type: 86
+      note.tags: 191
+      note.created: 172
+  - type: table
+    name: Cool finds
+    filters:
+      and:
+        - file.hasTag("misc")
+    order:
+      - file.name
+      - type
+      - formula.Untitled 2
+      - tags
+      - formula.Untitled 3
+    sort:
+      - property: created
+        direction: DESC
+    columnSize:
+      file.name: 529
+      note.type: 74
+      note.tags: 237
+      note.created: 172

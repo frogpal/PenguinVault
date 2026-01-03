@@ -1,0 +1,153 @@
+filters:
+  and:
+    - file.inFolder("2 - Source Materials/Media")
+    - '!file.inFolder("2 - Source Materials/Media/Tags")'
+formulas:
+  Untitled: |-
+    year + if(
+    now().year - year == 0, 
+        "", 
+    if(now().year - year == 1, " (" + (now().year - year).toString() + " year ago)", " (" + (now().year - year).toString() + " years ago)")
+    )
+  Year: note["date-watched"].year
+  type: if(genre.contains("Documentary"), "Documentary", type.title())
+  Untitled 2: rating + "/10 " + if(rating.round() == 10, "🏆") + if(rating.round() == 9, "🤯") + if(rating.round() >= 7 && rating.round() < 9, "😊") + if(rating.round() >= 5 && rating.round() < 7, "😐") + if(rating.round() >= 3 && rating.round() < 5, "😖") + if(rating.round() < 3, "🤮")
+  Genre: if(genre == "Documentary", "Documentary", genre.filter(value != "Documentary"))
+  Untitled 3: |-
+    if(file.hasProperty("duration"), 
+    if(duration % 60 == 0, duration / 60 + "h", if(duration > 60, (duration / 60).floor() + "h " + duration % 60 + "m", duration + " m")), seasons + if(seasons > 1, " season", " season"))
+properties:
+  formula.Untitled:
+    displayName: Year
+  formula.type:
+    displayName: Type
+  note.rating:
+    displayName: rating
+  formula.Untitled 2:
+    displayName: Rating
+  formula.Untitled 3:
+    displayName: Duration
+views:
+  - type: cards
+    name: All media
+    filters:
+      and:
+        - status == "watched"
+    groupBy:
+      property: formula.Year
+      direction: DESC
+    order:
+      - file.name
+      - formula.type
+      - formula.Genre
+      - formula.Untitled
+      - formula.Untitled 2
+    sort:
+      - property: date-watched
+        direction: DESC
+    image: note.cover
+    imageAspectRatio: 1.5
+    cardSize: 180
+    rowHeight: tall
+  - type: cards
+    name: Documentaries
+    filters:
+      and:
+        - genre.contains("Documentary")
+        - status == "watched"
+    groupBy:
+      property: formula.Year
+      direction: DESC
+    order:
+      - file.name
+      - formula.Untitled
+      - formula.Genre
+      - formula.Untitled 3
+      - formula.Untitled 2
+    sort:
+      - property: date-watched
+        direction: DESC
+    image: note.cover
+    imageAspectRatio: 1.5
+    cardSize: 180
+  - type: cards
+    name: TV Series
+    filters:
+      and:
+        - type == "tv-series"
+        - status == "watched"
+    order:
+      - file.name
+      - formula.Untitled
+      - genre
+      - seasons
+      - formula.Untitled 2
+    sort:
+      - property: date-watched
+        direction: DESC
+    image: note.cover
+    imageAspectRatio: 1.5
+    cardSize: 180
+    rowHeight: tall
+  - type: cards
+    name: Movies
+    filters:
+      and:
+        - '!genre.contains("Documentary")'
+        - status == "watched"
+    groupBy:
+      property: formula.Year
+      direction: DESC
+    order:
+      - file.name
+      - genre
+      - formula.Untitled 3
+      - formula.Untitled 2
+    sort:
+      - property: date-watched
+        direction: DESC
+    image: note.cover
+    imageFit: ""
+    imageAspectRatio: 1.5
+    cardSize: 180
+    rowHeight: tall
+  - type: cards
+    name: Watchlist
+    filters:
+      and:
+        - status == "to-watch"
+    groupBy:
+      property: formula.type
+      direction: ASC
+    order:
+      - file.name
+      - formula.type
+      - formula.Genre
+      - formula.Untitled
+      - formula.Untitled 3
+    sort:
+      - property: duration
+        direction: ASC
+    image: note.cover
+    imageFit: ""
+    imageAspectRatio: 1.5
+    cardSize: 180
+    rowHeight: tall
+  - type: cards
+    name: Paused
+    filters:
+      and:
+        - status == "paused"
+    order:
+      - file.name
+      - type
+      - genre
+      - formula.Untitled 3
+    sort:
+      - property: year
+        direction: DESC
+    image: note.cover
+    imageFit: ""
+    imageAspectRatio: 1.5
+    cardSize: 180
+    rowHeight: tall

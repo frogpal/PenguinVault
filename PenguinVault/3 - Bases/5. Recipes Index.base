@@ -1,0 +1,12 @@
+filters:
+  and:
+    - file.inFolder("2 - Source Materials/Recipes")
+views:
+  - type: cards
+    name: Table
+    order:
+      - file.name
+      - recipe type
+    image: note.cover
+    cardSize: 220
+    imageAspectRatio: 1.5

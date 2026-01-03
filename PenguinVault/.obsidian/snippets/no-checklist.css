@@ -1,0 +1,8 @@
+body {
+  --checklist-done-decoration: none;
+  --checklist-done-color: unset;
+}
+
+* {
+  transition: none !important;
+}

@@ -1,0 +1,106 @@
+filters:
+  and:
+    - file.inFolder("2 - Source Materials/Books")
+formulas:
+  Custom property: year + " " + if(now().year != year, "(" + (now().year - year).toString() + " years ago)", "")
+  test: |-
+    if(rating, rating + "/5 " + if(rating / rating.round() == 1, if(rating == 5, "⭐".repeat(5), "🌕".repeat(rating)), "🌕".repeat(rating.floor()
+    ) + "🌗"))
+  Untitled: |-
+    if(author.length > 1, if(author.length > 2, if(author.length > 3, list(author)[0].split(" ").slice(-1) + " et al.", 
+
+    if([author[0].split(" ").slice(-1), author[1].split(" ").slice(-1), author[2].split(" ").slice(-1)].unique().length != 3, author[0] + " et al.",
+
+    list(author)[0].split(" ").slice(-1) + ", " + list(author)[1].split(" ").slice(-1) + " & " + list(author)[2].split(" ").slice(-1))), 
+
+    if(list(author)[0].split(" ").slice(-1) == list(author)[1].split(" ").slice(-1),
+
+    list(author)[0].split(" ").slice(0,1) + " & " + list(author)[1] , list(author)[0].split(" ").slice(-1) + " & " + author[1].split(" ").slice(-1))), author)
+  author count: author.length
+  Pages: pages
+properties:
+  formula.Custom property:
+    displayName: Year
+  formula.test:
+    displayName: Rating
+  formula.Untitled:
+    displayName: Author
+views:
+  - type: cards
+    name: To Read
+    filters:
+      or:
+        - status.containsAny("to-read", "reading")
+    groupBy:
+      property: status
+      direction: ASC
+    order:
+      - file.name
+      - formula.Untitled
+      - formula.Custom property
+      - formula.Pages
+    sort:
+      - property: file.ctime
+        direction: ASC
+    image: note.cover
+    imageFit: contain
+    imageAspectRatio: 1.05
+    markers: bullet
+    indentProperties: false
+    columnSize:
+      file.name: 514
+      note.author: 205
+      file.ctime: 180
+  - type: cards
+    name: Read
+    filters:
+      and:
+        - status == "read"
+    groupBy:
+      property: read
+      direction: DESC
+    order:
+      - file.name
+      - formula.Untitled
+      - formula.Custom property
+      - formula.pages
+      - formula.test
+      - highlights
+    image: note.cover
+    imageFit: contain
+    imageAspectRatio: 1.05
+  - type: cards
+    name: Shelved
+    filters:
+      and:
+        - status.containsAny("abandoned", "paused")
+    groupBy:
+      property: status
+      direction: ASC
+    order:
+      - file.name
+      - formula.Untitled
+      - formula.Custom property
+      - formula.pages
+      - highlights
+    sort:
+      - property: file.ctime
+        direction: DESC
+    image: note.cover
+    imageFit: contain
+    imageAspectRatio: 1.05
+  - type: cards
+    name: Books with highlights
+    filters:
+      and:
+        - file.hasProperty("highlights")
+    order:
+      - file.name
+      - formula.Untitled
+      - formula.Custom property
+      - formula.test
+      - highlights
+    image: note.cover
+    cardSize: 200
+    imageAspectRatio: 1.05
+    imageFit: contain

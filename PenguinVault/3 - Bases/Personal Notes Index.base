@@ -1,0 +1,16 @@
+filters:
+  or:
+    - file.inFolder("4 - Personal notes")
+    - and:
+        - file.inFolder("2 - Source Materials/Resources")
+        - file.hasTag("personal")
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - type
+      - tags
+    columnSize:
+      file.name: 486
+      note.type: 106
