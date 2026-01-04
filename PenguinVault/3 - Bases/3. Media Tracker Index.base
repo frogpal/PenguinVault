@@ -1,7 +1,6 @@
 filters:
   and:
     - file.inFolder("2 - Source Materials/Media")
-    - '!file.inFolder("2 - Source Materials/Media/Tags")'
 formulas:
   Untitled: |-
     year + if(
