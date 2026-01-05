@@ -1,0 +1,12 @@
+{
+  "accentColor": "",
+  "baseFontSize": 18,
+  "theme": "obsidian",
+  "enabledCssSnippets": [
+    "no-checklist"
+  ],
+  "cssTheme": "Catppuccin",
+  "showRibbon": true,
+  "interfaceFontFamily": "",
+  "textFontFamily": "Inter"
+}

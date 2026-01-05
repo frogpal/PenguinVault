@@ -1,0 +1,19 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "status": "text",
+    "created": "datetime",
+    "source": "text",
+    "type": "multitext",
+    "year": "number",
+    "duration": "number",
+    "rating": "number",
+    "date-watched": "date",
+    "finale": "checkbox",
+    "seasons": "number",
+    "coordinates": "text",
+    "pages": "number"
+  }
+}
