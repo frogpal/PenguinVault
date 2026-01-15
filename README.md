@@ -2,7 +2,7 @@
 
 An obsidian vault for penguins. It has nothing to do with penguins. 
 
-To be used with my [web clipper templates](https://github.com/frogpal/obsidian-web-clipper-settings).
+To be used with my [web clipper templates](https://github.com/frogpal/web-clipper-templates).
 
 Originally posted on [reddit](https://www.reddit.com/r/ObsidianMD/comments/1q2b6fp/my_comprehensive_obsidian_setup_web_clipper_bases/).
 
