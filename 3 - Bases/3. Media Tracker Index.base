@@ -10,7 +10,7 @@ formulas:
     )
   Year: note["date-watched"].year
   type: if(genre.contains("Documentary"), "Documentary", type.title())
-  Untitled 2: rating + "/10 " + if(rating.round() == 10, "🏆") + if(rating.round() == 9, "🤯") + if(rating.round() >= 7 && rating.round() < 9, "😊") + if(rating.round() >= 5 && rating.round() < 7, "😐") + if(rating.round() >= 3 && rating.round() < 5, "😖") + if(rating.round() < 3, "🤮")
+  Untitled 2: if(rating, rating + "/10 " + if(rating.round() == 10, "🏆") + if(rating.round() == 9, "🤯") + if(rating.round() >= 7 && rating.round() < 9, "😊") + if(rating.round() >= 5 && rating.round() < 7, "😐") + if(rating.round() >= 3 && rating.round() < 5, "😖") + if(rating.round() < 3, "🤮"), None)
   Genre: if(genre == "Documentary", "Documentary", genre.filter(value != "Documentary"))
   Untitled 3: |-
     if(file.hasProperty("duration"), 
